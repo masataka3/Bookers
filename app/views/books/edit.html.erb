@@ -1,9 +1,25 @@
-<div>
-	<div>
-		<p>title:<%=@book.title %></p>
-		<p>body:<%=@book.body %></p>
-		 <%= f.submit "up date",edit_book_path(@book) %>
-		<%= link_to "show",edit_book_path(@book) %>
-		<%= link_to "back",books_book_path(@book) %>
+<% if flash[:notice] %>
+	<div class="flash">
+		<%= flash[:notice] %>
 	</div>
-</div>
+<% end %>
+		<% if @book.errors.any? %>
+  <div class="alert alert-warning">
+     <ul>error
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+<h1>Editing Book</h1>
+<!-- form_for部分 -->
+<%= form_for(@book) do |f| %>
+    <h4>title</h4>
+    <%= f.text_field :title %>
+    <h4>text</h4>
+    <%= f.text_area :body %>
+    <%= f.submit 'Update Book' %>
+<% end %>
+<p><%=link_to "show", book_path(@book) %><p>
+<p><%=link_to "back", books_path%><p>
